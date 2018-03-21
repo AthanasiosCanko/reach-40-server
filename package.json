@@ -1,0 +1,16 @@
+{
+  "name": "reach_40_server",
+  "version": "1.0.0",
+  "description": "Server to handle Reach 40 high scores.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Athanasios Canko",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.0.11"
+  }
+}
