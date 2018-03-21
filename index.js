@@ -41,7 +41,17 @@ app.get("/all", function(req, res) {
     high_score.find({}, function(err, item) {
         if (err) res.json({"message": err})
         else if (!item) res.json({"message": "empty"})
-        else res.json({"message": "success", "high_scores": item})
+        else {
+            item.sort(function(a, b){
+                return parseInt(a["score"]) - parseInt(b["score"])
+            })
+
+            if (item.length > 100) {
+                item = item.slice(0, 99)
+            }
+            
+            res.json({"message": "success", "high_scores": item})
+        }
     })
 })
 
