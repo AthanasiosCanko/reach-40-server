@@ -1,4 +1,4 @@
-var express = require("express"), mongoose = require("mongoose"), high_score = require("./schemas", )http = require("http")
+var express = require("express"), mongoose = require("mongoose"), high_score = require("./schemas"), http = require("http")
 var port = process.env.PORT || 7000, app = new express()
 
 mongoose.connect("mongodb://thano:thano@ds119969.mlab.com:19969/reach-40")
