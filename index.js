@@ -30,6 +30,9 @@ app.post("/high_score", function(req, res) {
     var name = req.body.name
     var score = Number(req.body.score)
 
+    console.log(name)
+    console.log(score)
+
     if ((typeof name == "string") && (typeof score == "number")) {
         high_score.findOne({name: name}, function(err, item) {
 
