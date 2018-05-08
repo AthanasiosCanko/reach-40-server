@@ -30,17 +30,20 @@ app.post("/high_score", function(req, res) {
     var name = req.body.name
     var score = Number(req.body.score)
 
-    console.log(name)
-    console.log(score)
-
     if ((typeof name == "string") && (typeof score == "number")) {
         high_score.findOne({name: name}, function(err, item) {
 
-            if (err) res.json({"message": "Server error, please try later."})
+            if (err) {
+                console.log(err)
+                res.json({"message": "Server error, please try later."})
+            }
             else if (!item) {
                 high_score.create({name: name, score: score}, function(err, item) {
 
-                    if (err || !item) res.json({"message": "Database error, please try later."})
+                    if (err || !item) {
+                        console.log(err)
+                        res.json({"message": "Database error, please try later."})
+                    }
                     else res.json({name: item.name,score: item.score,message: "Success, score saved."})
 
                 })
