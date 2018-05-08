@@ -3,8 +3,8 @@ var mongoose = require("mongoose")
 var high_score = require("./schemas")
 var http = require("http")
 
-var db_username = require('./data').db_username
-var db_password = require('./data').db_password
+var db_username = process.env.DB_USERNAME || require('./data').db_username
+var db_password = process.env.DB_PASSWORD || require('./data').db_password
 
 var app = new express()
 var port = process.env.PORT || require('./data').port
