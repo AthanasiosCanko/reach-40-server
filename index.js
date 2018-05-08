@@ -1,7 +1,15 @@
-var express = require("express"), mongoose = require("mongoose"), high_score = require("./schemas"), http = require("http")
-var port = process.env.PORT || 7000, app = new express()
+var express = require("express")
+var mongoose = require("mongoose")
+var high_score = require("./schemas")
+var http = require("http")
 
-mongoose.connect("mongodb://thano:thano@ds119969.mlab.com:19969/reach-40")
+var db_username = require('./data').db_username
+var db_password = require('./data').db_password
+
+var app = new express()
+var port = process.env.PORT || require('./data').port
+
+mongoose.connect("mongodb://" + db_username + ":" + db_password + "@ds119969.mlab.com:19969/reach-40")
 mongoose.connection.on("error", function(err) {
     console.log(err)
 })
@@ -16,7 +24,8 @@ app.get("/", function(req, res) {
 })
 
 app.get("/:name/:score", function(req, res) {
-    var name = req.params.name, score = Number(req.params.score)
+    var name = req.params.name
+    var score = Number(req.params.score)
 
     if ((typeof name == "string") && (typeof score == "number")) {
         high_score.findOne({name: name}, function(err, item) {
@@ -31,7 +40,6 @@ app.get("/:name/:score", function(req, res) {
                 })
             }
             else res.json({"message": "Sorry, username taken."})
-
         })
     }
     else res.json({"message": "URL error, please try again."})
@@ -49,7 +57,7 @@ app.get("/all", function(req, res) {
             if (item.length > 100) {
                 item = item.slice(0, 99)
             }
-            
+
             res.json({"message": "success", "high_scores": item})
         }
     })
