@@ -77,5 +77,5 @@ app.listen(port, function() {
 
     setInterval(function() {
         http.get("http://reach-40.herokuapp.com");
-    }, 1800000);
+    }, 180000);
 })
