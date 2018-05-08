@@ -1,5 +1,6 @@
 var express = require("express")
 var mongoose = require("mongoose")
+var bodyparser = require("body-parser")
 var high_score = require("./schemas")
 var http = require("http")
 
@@ -8,6 +9,8 @@ var db_password = process.env.DB_PASSWORD || require('./data').db_password
 
 var app = new express()
 var port = process.env.PORT || require('./data').port
+
+app.use(bodyparser.urlencoded({extended: true}))
 
 mongoose.connect("mongodb://" + db_username + ":" + db_password + "@ds119969.mlab.com:19969/reach-40")
 mongoose.connection.on("error", function(err) {
@@ -23,9 +26,9 @@ app.get("/", function(req, res) {
     res.json({"message": "Hello there! Thano here greeting you with an easter egg!"})
 })
 
-app.get("/:name/:score", function(req, res) {
-    var name = req.params.name
-    var score = Number(req.params.score)
+app.post("/high_score", function(req, res) {
+    var name = req.body.name
+    var score = Number(req.body.score)
 
     if ((typeof name == "string") && (typeof score == "number")) {
         high_score.findOne({name: name}, function(err, item) {
